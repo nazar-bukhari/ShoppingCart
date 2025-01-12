@@ -7,17 +7,12 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
-//        Shop.Order order = Shop.Order.newBuilder()
-//                .addAllProduct(
-//                        Arrays.asList(
-//                                newProduct(1, 10, "milk"),
-//                                newProduct(2, 15, "egg")
-//                        )
-//                ).build();
-//        System.out.println(order);
 
         int port = 50051;
-        Server server = ServerBuilder.forPort(port).build();
+        Server server = ServerBuilder
+                .forPort(port)
+                .addService(new ShopServerImpl())
+                .build();
         server.start();
         System.out.println("Server Started");
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -28,12 +23,4 @@ public class Main {
 
         server.awaitTermination();
     }
-
-//    private static Shop.Product newProduct(int id, long price, String name) {
-//        return Shop.Product.newBuilder()
-//                .setId(id)
-//                .setPrice(price)
-//                .setName(name)
-//                .build();
-//    }
 }
